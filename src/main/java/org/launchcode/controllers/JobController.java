@@ -30,7 +30,14 @@ public class JobController {
         // TODO #1 - get the Job with the given ID and pass it into the view
        Job newJob = jobData.findById(id);
        model.addAttribute("newJob", newJob);
-       //successfully sends id to the querey string.
+
+       //successfully sends id to the query string.
+
+        model.addAttribute("name", newJob.getName());
+        model.addAttribute("employer", newJob.getEmployer());
+        model.addAttribute("location", newJob.getLocation());
+        model.addAttribute("position", newJob.getPositionType());
+        model.addAttribute("skill", newJob.getCoreCompetency());
 
 
         return "job-detail";
