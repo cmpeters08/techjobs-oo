@@ -13,6 +13,8 @@ import java.util.ArrayList;
 /**
  * Created by LaunchCode
  */
+
+//represents the data needed to process and display the form
 public class JobForm {
 
     @NotNull
@@ -39,6 +41,7 @@ public class JobForm {
 
         /*
             TODO #4 - populate the other ArrayList collections needed in the view
+            gets object ready to be a form, gets object ready to be passed into a template
         */
 
         employers = jobData.getEmployers().findAll();
