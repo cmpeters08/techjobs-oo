@@ -33,11 +33,12 @@ public class JobController {
 
        //successfully sends id to the query string.
 
+
         model.addAttribute("name", newJob.getName());
         model.addAttribute("employer", newJob.getEmployer());
         model.addAttribute("location", newJob.getLocation());
-        model.addAttribute("position", newJob.getPositionType());
-        model.addAttribute("skill", newJob.getCoreCompetency());
+        model.addAttribute("positionType", newJob.getPositionType());
+        model.addAttribute("coreCompetency", newJob.getCoreCompetency());
 
 
         return "job-detail";
