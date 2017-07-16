@@ -1,7 +1,6 @@
 package org.launchcode.controllers;
 
-import org.launchcode.models.Employer;
-import org.launchcode.models.Job;
+import org.launchcode.models.*;
 import org.launchcode.models.forms.JobForm;
 import org.launchcode.models.data.JobData;
 import org.springframework.stereotype.Controller;
@@ -33,13 +32,11 @@ public class JobController {
 
        //successfully sends id to the query string.
 
-
         model.addAttribute("name", newJob.getName());
         model.addAttribute("employer", newJob.getEmployer());
         model.addAttribute("location", newJob.getLocation());
         model.addAttribute("positionType", newJob.getPositionType());
         model.addAttribute("coreCompetency", newJob.getCoreCompetency());
-
 
         return "job-detail";
     }
@@ -47,6 +44,7 @@ public class JobController {
     @RequestMapping(value = "add", method = RequestMethod.GET)
     public String add(Model model) {
         model.addAttribute(new JobForm());
+
         return "new-job";
     }
 
@@ -57,13 +55,31 @@ public class JobController {
         // new Job and add it to the jobData data store. Then
         // redirect to the job detail view for the new Job.
 
+        if (errors.hasErrors()){
+            model.addAttribute(new JobForm());
+            return "new-job";
+        }
         //if we know it's valid get employer id from jobform
-        Employer theEmployer =  jobData.getEmployers().findById(jobForm.getEmployerId());
+        else {
+            model.addAttribute(new JobForm());
 
-       // Job newJob = new Job(name, theEmployer, ...); what other things may look like.
+            model.addAttribute(new Job());
 
+            String theName = jobForm.getName();
+            Employer theEmployer = jobData.getEmployers().findById(jobForm.getEmployerId());
+            Location theLocation = jobData.getLocations().findById(jobForm.getLocationId());
+            PositionType thePositionType = jobData.getPositionTypes().findById(jobForm.getPositionTypeId());
+            CoreCompetency theCoreCompetency =  jobData.getCoreCompetencies().findById(jobForm.getCoreCompetencyId());
 
-        return "";
+            Job newJob = new Job(theName, theEmployer, theLocation, thePositionType, theCoreCompetency);
 
+            //give newJob and ID and send it through.
+            model.addAttribute("newJobId", newJob.getId());
+
+            jobData.add(newJob);
+
+            return "job-detail";
+            // Job newJob = new Job(name, theEmployer, ...); what other things may look like.
+        }
     }
 }
