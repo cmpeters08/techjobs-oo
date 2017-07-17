@@ -45,6 +45,7 @@ public class JobController {
     public String add(Model model) {
         model.addAttribute(new JobForm());
 
+
         return "new-job";
     }
 
@@ -78,7 +79,8 @@ public class JobController {
 
             jobData.add(newJob);
 
-            return "job-detail";
+            return "redirect:?id=" + newJob.getId();
+            //return new redirect query sting plus job id.
             // Job newJob = new Job(name, theEmployer, ...); what other things may look like.
         }
     }
